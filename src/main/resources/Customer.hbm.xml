@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 5 Dec, 2013 12:09:18 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping default-lazy="false">
+    <class name="com.revature.models.Customer" table="customer">
+        <id name="id" type="int">
+            <column name="customer_id" />
+            <generator class="assigned" />
+        </id>
+        <property generated="never" lazy="false" name="firstName"
+            type="java.lang.String">
+            <column name="first_name" />
+        </property>
+        <property generated="never" lazy="false" name="LastName"
+            type="java.lang.String">
+            <column name="last_name" />
+        </property>
+        <property generated="never" lazy="false" name="userLoginId"
+            type="int">
+            <column name="user_login_id" />
+        </property>
+    </class>
+</hibernate-mapping>
