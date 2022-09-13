@@ -2,6 +2,7 @@ package com.revature.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -36,7 +37,7 @@ public class AccountMenu extends HttpServlet{
 		
 		String dispatch = "";
 		
-
+		System.out.println("test");
 		PrintWriter out = response.getWriter();
 		String accountInitBalance = request.getParameter("accountInitBalance");
 		String customerId = request.getParameter("customerId");
@@ -92,6 +93,24 @@ public class AccountMenu extends HttpServlet{
 		} catch (SecurityException | IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		dispatch = "accountmenu.html";
 		
@@ -100,6 +119,9 @@ public class AccountMenu extends HttpServlet{
 		out.print("balance: " + getAccount.getBalance());
 		out.print("customerId: " + getAccount.getCustomerId());
 		
+		System.out.print("accountId: " + getAccount.getAccountId());
+		System.out.print("balance: " + getAccount.getBalance());
+		System.out.print("customerId: " + getAccount.getCustomerId());
 		
 		RequestDispatcher rD = request.getRequestDispatcher(dispatch);
 		rD.include(request, response);

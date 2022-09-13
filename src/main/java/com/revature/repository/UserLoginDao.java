@@ -4,6 +4,7 @@ package com.revature.repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revature.models.Account;
 import com.revature.models.UserLogin;
 
 public class UserLoginDao {
@@ -33,7 +34,26 @@ public class UserLoginDao {
 	
 	@SuppressWarnings("deprecation")
 	public UserLogin getUserLoginByUsername(String username) {
-		return null;
+		
+		Object acc = null;
+		
+		//Object account = db.where("BobRoss", "account", "usernames", ObjTest2.class);
+		//ObjTest2 acc = (ObjTest2) account;
+		//System.out.println(acc.acc_balance );
+		
+		try {
+			
+			
+			 acc = ConnectionFactory.getConnection().where(username, "userlogin", "username", UserLogin.class);
+			
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		System.out.println(acc.toString());
+		return (UserLogin) acc;
 	
 
 			

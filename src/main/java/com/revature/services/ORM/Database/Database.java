@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.revature.services.ORM.Testing.ObjTest1;
+
 
 
 
@@ -26,12 +26,7 @@ public class Database {
 	}
 
 
-	public Object  where(String what, String table, String column, Class clazz) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
-		Object obj = new Query(this).where(what, table, column, clazz);
-		return obj;
-	}
-	
-	public Object  where(Integer what, String table, String column, Class clazz) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
+	public Object  where(Object what, String table, String column, Class clazz) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
 		Object obj = new Query(this).where(what, table, column, clazz);
 		return obj;
 	}

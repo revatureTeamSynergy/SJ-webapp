@@ -37,11 +37,13 @@ public class LoginServlet extends HttpServlet{
 //		
 		UserLogin uLog = uDao.getUserLoginByUsername(username);
 		
+		
+		
 		if (uLog == null) {
 			out.println("<font color=red>Username or Password is incorrect</font>");
 		}
 		
-		
+		System.out.println(uLog.toString());
 		
 		if(uLog.getPassword().equals(password)) {
 			

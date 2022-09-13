@@ -16,21 +16,28 @@ public class Account {
 	
 	
 	@Id
-	@Column(name="account_id")
+	@Column(name="accountid")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int accountid;
+	public int accountid;
 	
 	@Column(name="balance")
-	private double balance;
+	public double balance;
 	
-	@Column(name="customer_id")
-	private int customerid;
+	@Column(name="customerid")
+	public int customerid;
 
-	public Account(double balance, int customerId) {
-		super();
-		this.balance = balance;
-		this.customerid = customerId;
-	}
+//	public Account(double balance, int customerId) {
+//		super();
+//		this.balance = balance;
+//		this.customerid = customerId;
+//	}
+	
+//	public Account(int accountid, double balance, int customerId) {
+//		super();
+//		this.accountid = accountid;
+//		this.balance = balance;
+//		this.customerid = customerId;
+//	}
 
 	public Account() {
 		// TODO Auto-generated constructor stub

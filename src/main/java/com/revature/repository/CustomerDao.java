@@ -31,7 +31,7 @@ public int addCustomer(Customer cust) {
 
 	}
 
-public Customer getCustomer(UserLogin userLoginId) {
+public Customer getCustomerBy(UserLogin userLoginId) {
 	return null;
 	
 }

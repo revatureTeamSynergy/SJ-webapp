@@ -5,13 +5,27 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.revature.models.Account;
+import com.revature.repository.ConnectionFactory;
 import com.revature.services.ORM.Database.Database;
 
 public class Driver {
-	/*
 	public static void main(String[] args) throws SQLException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
-		 Database db = new Database("jdbc:postgresql://postgres.ccyxl0ztd58i.us-west-2.rds.amazonaws.com:5432/", System.getenv("db_name"), System.getenv("db_pass"));
-
+		
+		
+		Account newAccount = new Account();
+		
+		newAccount.setBalance(122);
+		newAccount.setCustomerId(2);
+		
+		ConnectionFactory.getConnection().insert(newAccount);
+		 
+		 
+		 
+		 
+		 
+		 
+	}
 		//ObjTest1 Davinci = new ObjTest1();
 		//Davinci.usernames = "Davinci";
 		//Davinci.passwords = "Dinci";
@@ -33,6 +47,8 @@ public class Driver {
 		//acco.acc_num = 4.0;
 		
 		//db.insert(acco);
+		 
+		 
 		
 		//Object account = db.where("BobRoss", "account", "usernames", ObjTest2.class);
 		//ObjTest2 acc = (ObjTest2) account;
@@ -48,6 +64,6 @@ public class Driver {
 		
 		
 		//db.delete(Davinci);
-	}
-	*/
+	
+	
 }
