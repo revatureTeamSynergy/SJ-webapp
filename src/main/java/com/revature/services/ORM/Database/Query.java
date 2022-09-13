@@ -1,6 +1,7 @@
-package com.revature.ORM.Database;
+package com.revature.services.ORM.Database;
 
 import java.lang.reflect.Constructor;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.PreparedStatement;
@@ -10,10 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.ORM.Objects.Pojo;
-import com.revature.ORM.Objects.Property;
-import com.revature.ORM.Testing.ObjTest1;
-import com.revature.ORM.Util.Util;
+import com.revature.services.ORM.Objects.Pojo;
+import com.revature.services.ORM.Objects.Property;
+import com.revature.services.ORM.Testing.ObjTest1;
+import com.revature.services.ORM.Util.Util;
 
 public class Query {
 	Object obj;
@@ -34,15 +35,20 @@ public class Query {
 		for(String c : pojo.columns) {
 			Class<?> clazz = obj.getClass();
 			Field field = clazz.getDeclaredField(c);
+			field.setAccessible(true);
 			Object value = field.get(obj);
 			values.add(value);
 		}
+		
+		values.remove(0);
 		return values;
 	}
 	
 	public ArrayList<String> getColumns(Object obj) {
 		Pojo pojo = new Pojo(obj.getClass());
+		pojo.columns.remove(0);
 		return pojo.columns;
+		
 	}
 	
 	public String getTable(Object obj) {
@@ -58,6 +64,7 @@ public class Query {
 		String cString = Util.ArrayListToString(columns);
 		String vString = Util.ArrayListToStringWQ(values);
 		String sql = "INSERT INTO " + table + " ("+cString+") values ("+vString+");";
+		System.out.println(sql);
 		return sql;
 		
 	}
@@ -81,6 +88,7 @@ public class Query {
 	
 	public void putValue(Object con, String name, Object value, Class<?> clazz) throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 		Pojo pojo = new Pojo(clazz);
+		System.out.println(pojo.toString());
 		Property prop = pojo.propertyMap.get(name);
 		prop.field.set(con, value);
 	}
@@ -92,6 +100,36 @@ public class Query {
 		ArrayList<Object> rows = new ArrayList<>();
 		Object row = getConstructor(clazz);
 		final String sql = "SELECT * FROM " + table + " WHERE " + column + " = '" + what + "';";
+		System.out.println("SQL IS THISSSSSSSS " + sql);
+		try(PreparedStatement statement = database.connection.prepareStatement(sql);)
+		{
+			ResultSet set = statement.executeQuery();
+			final ResultSetMetaData meta = set.getMetaData();
+			final int columnC = meta.getColumnCount();
+			while (set.next()) {	
+				for(int i = 1; i <= columnC; i++) {
+				values.add(set.getObject(i));
+				columns.add(meta.getColumnLabel(i));
+				}
+				
+			for(int i = 0; i < values.size(); i++) {
+				putValue(row, columns.get(i), values.get(i), clazz);
+				}
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return row;
+	}
+	
+	public Object where(Integer what, String table, String column, Class<?> clazz) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
+		ArrayList<Object> values = new ArrayList<>();
+		ArrayList<String> columns = new ArrayList<>();
+		ArrayList<Object> rows = new ArrayList<>();
+		Object row = getConstructor(clazz);
+		final String sql = "SELECT * FROM " + table + " WHERE " + column + " = '" + what + "';";
+		System.out.println("SQL IS THISSSSSSSS " + sql);
 		try(PreparedStatement statement = database.connection.prepareStatement(sql);)
 		{
 			ResultSet set = statement.executeQuery();

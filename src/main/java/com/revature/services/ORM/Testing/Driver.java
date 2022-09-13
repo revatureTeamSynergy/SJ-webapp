@@ -1,15 +1,16 @@
-package com.revature.ORM.Testing;
+package com.revature.services.ORM.Testing;
 
 import java.lang.reflect.InvocationTargetException;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.revature.ORM.Database.Database;
+import com.revature.services.ORM.Database.Database;
 
 public class Driver {
 	/*
 	public static void main(String[] args) throws SQLException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
-		// Database db = new Database("jdbc:postgresql://postgres.ccyxl0ztd58i.us-west-2.rds.amazonaws.com:5432/", System.getenv("db_name"), System.getenv("db_pass"));
+		 Database db = new Database("jdbc:postgresql://postgres.ccyxl0ztd58i.us-west-2.rds.amazonaws.com:5432/", System.getenv("db_name"), System.getenv("db_pass"));
 
 		//ObjTest1 Davinci = new ObjTest1();
 		//Davinci.usernames = "Davinci";

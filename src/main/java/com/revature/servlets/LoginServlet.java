@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.revature.models.UserLogin;
-import com.revature.repository.HibernateUtil;
 import com.revature.repository.UserLoginDao;
 
 
@@ -30,10 +29,12 @@ public class LoginServlet extends HttpServlet{
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
+		
+//		
 		UserLoginDao uDao = new UserLoginDao();
-		
+//		
 		String dispatch = "";
-		
+//		
 		UserLogin uLog = uDao.getUserLoginByUsername(username);
 		
 		if (uLog == null) {

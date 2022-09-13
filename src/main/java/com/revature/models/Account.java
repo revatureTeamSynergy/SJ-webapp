@@ -2,6 +2,7 @@ package com.revature.models;
 
 import java.util.Objects;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,26 +10,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="accounts", schema="public")
+
+@Table(name="account", schema="public")
 public class Account {
 	
 	
 	@Id
 	@Column(name="account_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int accountId;
+	private int accountid;
 	
 	@Column(name="balance")
 	private double balance;
 	
 	@Column(name="customer_id")
-	private int customerId;
+	private int customerid;
 
 	public Account(double balance, int customerId) {
 		super();
 		this.balance = balance;
-		this.customerId = customerId;
+		this.customerid = customerId;
 	}
 
 	public Account() {
@@ -36,11 +37,11 @@ public class Account {
 	}
 
 	public int getAccountId() {
-		return accountId;
+		return accountid;
 	}
 
 	public void setAccountId(int accountId) {
-		this.accountId = accountId;
+		this.accountid = accountId;
 	}
 
 	public double getBalance() {
@@ -52,16 +53,16 @@ public class Account {
 	}
 
 	public int getCustomerId() {
-		return customerId;
+		return customerid;
 	}
 
 	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+		this.customerid = customerId;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(accountId, balance, customerId);
+		return Objects.hash(accountid, balance, customerid);
 	}
 
 	@Override
@@ -73,14 +74,14 @@ public class Account {
 		if (getClass() != obj.getClass())
 			return false;
 		Account other = (Account) obj;
-		return accountId == other.accountId
+		return accountid == other.accountid
 				&& Double.doubleToLongBits(balance) == Double.doubleToLongBits(other.balance)
-				&& customerId == other.customerId;
+				&& customerid == other.customerid;
 	}
 
 	@Override
 	public String toString() {
-		return "Accounts [accountId=" + accountId + ", balance=" + balance + ", customerId=" + customerId + "]";
+		return "Accounts [accountId=" + accountid + ", balance=" + balance + ", customerId=" + customerid + "]";
 	}
 	
 	

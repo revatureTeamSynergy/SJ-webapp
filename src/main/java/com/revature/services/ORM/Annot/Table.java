@@ -1,4 +1,4 @@
-package com.revature.ORM.Annot;
+package com.revature.services.ORM.Annot;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

@@ -1,12 +1,13 @@
-package com.revature.ORM.Database;
+package com.revature.services.ORM.Database;
 
 import java.lang.reflect.InvocationTargetException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.revature.ORM.Testing.ObjTest1;
+import com.revature.services.ORM.Testing.ObjTest1;
 
 
 
@@ -26,6 +27,11 @@ public class Database {
 
 
 	public Object  where(String what, String table, String column, Class clazz) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
+		Object obj = new Query(this).where(what, table, column, clazz);
+		return obj;
+	}
+	
+	public Object  where(Integer what, String table, String column, Class clazz) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
 		Object obj = new Query(this).where(what, table, column, clazz);
 		return obj;
 	}

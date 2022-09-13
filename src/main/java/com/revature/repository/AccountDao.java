@@ -1,11 +1,14 @@
 package com.revature.repository;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+
+import java.sql.SQLException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.revature.models.Account;
+
+import com.revature.services.ORM.Database.Database;
 
 public class AccountDao {
 	
@@ -13,39 +16,65 @@ public class AccountDao {
 	
 	Logger fileLogger;
 	
+	
+	
 	public AccountDao() {
 		consoleLogger = LoggerFactory.getLogger("consoleLogger");
 		fileLogger = LoggerFactory.getLogger("fileLogger");
 		
 	}
 	
-public int addAccount(Account acc) {
+	
+	
+public Account addAccount(Account acc) throws SQLException {
 		
-		// Capture Session
-		Session ses = HibernateUtil.getSession();
-		
-		// Import Transaction from hibernate not JPA
-		Transaction tx = ses.getTransaction();
-		
-		int pk = (int) ses.save(acc); // The save() session method performs an insert on the DB
+		// Capture
+	
+
 		
 		try {
-			tx.commit();
-		} catch (Exception e) {
+			 ConnectionFactory.getConnection().insert(acc);
+			
+		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return pk;
+		return acc;
 	}
 
-public Account getAccountById(int acc) {
-	Account account = new Account();
-	Session ses = HibernateUtil.getSession();
+public Account getAccountById(Integer accId) {
+	Object acc = null;
 	
-	account = ses.find(Account.class, "account_id");
+	//Object account = db.where("BobRoss", "account", "usernames", ObjTest2.class);
+	//ObjTest2 acc = (ObjTest2) account;
+	//System.out.println(acc.acc_balance );
 	
-	return account;
+	try {
+		
+		
+		 acc = ConnectionFactory.getConnection().where(accId, "account", "accountid", Account.class);
+		
+	} catch (Throwable e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+	System.out.println(acc.toString());
+	return (Account) acc;
+}
+
+public void deleteAccount(Account acc) {
+	try {
+		 ConnectionFactory.getConnection().delete(acc);
+		
+	} catch (Throwable e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
 }
 	
 	

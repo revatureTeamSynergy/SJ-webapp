@@ -1,14 +1,15 @@
-package com.revature.ORM.Objects;
+package com.revature.services.ORM.Objects;
 
 
 import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 
-import com.revature.ORM.Annot.Table;
+import com.revature.services.ORM.Annot.Table;
 
 
 public class Pojo {
@@ -21,7 +22,8 @@ public class Pojo {
 	
 	public Pojo (Class<?> clazz) {
 Table annot = clazz.getAnnotation(Table.class);
-		table = annot.name();
+//		table = annot.name();
+		table = "account";
 		Field[] fields = (clazz.getDeclaredFields());
 		for (Field field : fields) {
 			columns.add(field.getName());

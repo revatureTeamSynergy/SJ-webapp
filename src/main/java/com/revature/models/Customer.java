@@ -1,6 +1,6 @@
 package com.revature.models;
 
-import java.io.Serializable;
+
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -10,80 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "Customer", schema="public")
 
-public class Customer implements Serializable{
+@Table(name = "customer", schema="public")
+
+public class Customer{
 	
+	public Integer  customerId;
+
+	public String firstName;
+
+	public String lastName;
 	
-	@Id
-	@Column(name = "customer_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	
-	public CharField  customerId = new CharField(120, true, true);
-	
-	public final String  sqlId = "customerId";
-	
-	public String getSqlId() {return sqlId; };
-	
-	@Column(name = "first_name", nullable=false)
-	public CharField firstName  = new CharField(120, true);
-	
-	@Column(name = "last_name", nullable=false)
-	public CharField lastName = new CharField(120, true);
-	
-	public String getSqlIdVoid() {
-		return sqlId;
-	}
-
-
-
-	@Column(name = "user_login_id", unique=true, nullable=false)
-	
-	public CharField userLoginId = new CharField(120, true);
-
-	public Customer(CharField firstName, CharField lastName, CharField userLoginId) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userLoginId = userLoginId;
-	}
-
-	public Customer() {
-		super();
-	}
-
-	public CharField getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(CharField customerId) {
-		this.customerId = customerId;
-	}
-
-	public CharField getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(CharField firstName) {
-		this.firstName = firstName;
-	}
-
-	public CharField getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(CharField lastName) {
-		this.lastName = lastName;
-	}
-
-	public CharField getUserLoginId() {
-		return userLoginId;
-	}
-
-	public void setUserLoginId(CharField userLoginId) {
-		this.userLoginId = userLoginId;
-	}
+	public Integer userLoginId;
 
 	@Override
 	public int hashCode() {
@@ -99,8 +37,40 @@ public class Customer implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		return customerId == other.customerId && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(lastName, other.lastName) && userLoginId == other.userLoginId;
+		return Objects.equals(customerId, other.customerId) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(userLoginId, other.userLoginId);
+	}
+
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Integer getUserLoginId() {
+		return userLoginId;
+	}
+
+	public void setUserLoginId(Integer userLoginId) {
+		this.userLoginId = userLoginId;
 	}
 
 	@Override
@@ -108,6 +78,8 @@ public class Customer implements Serializable{
 		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", userLoginId=" + userLoginId + "]";
 	}
+
+	
 	
 	
 

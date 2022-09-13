@@ -3,6 +3,7 @@ package com.revature.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,24 @@ import com.revature.models.Customer;
 import com.revature.repository.CustomerDao;
 
 public class UserAccount extends HttpServlet{
+	
+	
+	
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		response.setContentType("text/html");
+		
+		String dispatch = "";
+		
+
+		PrintWriter out = response.getWriter();
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String userLoginId = request.getParameter("userLoginId");
+		
+		
+		
+	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 			

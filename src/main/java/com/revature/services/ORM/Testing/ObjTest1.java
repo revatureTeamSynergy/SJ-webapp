@@ -1,6 +1,6 @@
-package com.revature.ORM.Testing;
+package com.revature.services.ORM.Testing;
 
-import com.revature.ORM.Annot.Table;
+import com.revature.services.ORM.Annot.Table;
 
 @Table (name = "login")
 public class ObjTest1 {
