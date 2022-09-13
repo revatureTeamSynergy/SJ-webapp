@@ -13,6 +13,7 @@ import javax.persistence.Table;
 @Table(name="accounts", schema="public")
 public class Account {
 	
+	
 	@Id
 	@Column(name="account_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

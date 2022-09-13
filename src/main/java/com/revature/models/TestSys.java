@@ -1,40 +1,33 @@
 package com.revature.models;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
-import org.hibernate.Session;
+import javax.persistence.Column;
+import javax.persistence.Table;
+
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.dieselpoint.norm.Database;
-import com.dieselpoint.norm.sqlmakers.StandardPojoInfo;
-import com.dieselpoint.norm.sqlmakers.StandardSqlMaker;
-import com.revature.repository.AccountDao;
-import com.revature.repository.CustomerDao;
-import com.revature.repository.HibernateUtil;
-import com.revature.repository.UserLoginDao;
+import com.revature.repository.Manager;
 
 public class TestSys {
 	
 //	private static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
 //			.createEntityManagerFactory("postgres");
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
 		
-		 Configuration configuration = new Configuration();
-	        configuration.configure("hibernate.cfg.xml");
-	        
-	        
-	        SessionFactory factory = configuration.buildSessionFactory();
-	    
-	        
-	        Session session = HibernateUtil.getSession();
-
-	        Transaction tx = session.beginTransaction();
+//		 Configuration configuration = new Configuration();
+//	        configuration.configure("hibernate.cfg.xml");
+//	        
+//	        
+//	        SessionFactory factory = configuration.buildSessionFactory();
+//	    
+//	        
+//	        Session session = HibernateUtil.getSession();
+//
+//	        Transaction tx = session.beginTransaction();
 		
 		
 //		Database db = new Database();
@@ -48,10 +41,11 @@ public class TestSys {
 //		
 //		Money money = new Money("moname");
 //		db.insert(money);
-		Customer custy = new Customer();
-		custy.setFirstName("bob");
-		custy.setLastName("huns");
-		custy.setUserLoginId(1);
+//		Customer custy = new Customer();
+//		custy.setFirstName("bobie");
+//		custy.setLastName("huns");
+//		custy.setUserLoginId(1);
+		
 //		
 //		CustomerDao cDao = new CustomerDao();
 //		
@@ -60,11 +54,20 @@ public class TestSys {
 //		StandardSqlMaker sqlMk = new StandardSqlMaker();
 //		StandardPojoInfo pjo = sqlMk.getPojoInfo(custy);
 //		System.out.println(pjo(Customer.class));
-	        
-	      CustomerDao cDao = new CustomerDao();
-	      
-	      cDao.addCustomer(custy);
 		
+		
+//		Object colName = custy.getClass().getField("sqlId").get(Customer.class);
+
+//		System.out.println(value);
+		
+//			System.out.println("field " + " " + field.getName());
+//		}
+		
+		
+	  
+	      
+	     Customer s = Manager.get(2, Customer.class);
+		System.out.println(s.getFirstName().getValue());
 //		AccountDao aDao = new AccountDao();
 //		
 //		Account acc1 = new Account();
@@ -84,9 +87,9 @@ public class TestSys {
 //			e.printStackTrace();
 //		}
 		
-		tx.commit();
-	
-		session.close();
+//		tx.commit();
+//	
+//		session.close();
 	}
 
 }

@@ -24,6 +24,7 @@ public class LoginServlet extends HttpServlet{
 		// Set Response Header
 		response.setContentType("text/html");
 		
+	
 
 		PrintWriter out = response.getWriter();
 		String username = request.getParameter("username");

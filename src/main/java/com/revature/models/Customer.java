@@ -12,23 +12,37 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Customer", schema="public")
+
 public class Customer implements Serializable{
+	
 	
 	@Id
 	@Column(name = "customer_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int customerId;
+	
+	public CharField  customerId = new CharField(120, true, true);
+	
+	public final String  sqlId = "customerId";
+	
+	public String getSqlId() {return sqlId; };
 	
 	@Column(name = "first_name", nullable=false)
-	private String firstName;
+	public CharField firstName  = new CharField(120, true);
 	
 	@Column(name = "last_name", nullable=false)
-	private String lastName;
+	public CharField lastName = new CharField(120, true);
 	
-	@Column(name = "user_login_id", unique=true, nullable=false)
-	private int userLoginId;
+	public String getSqlIdVoid() {
+		return sqlId;
+	}
 
-	public Customer(String firstName, String lastName, int userLoginId) {
+
+
+	@Column(name = "user_login_id", unique=true, nullable=false)
+	
+	public CharField userLoginId = new CharField(120, true);
+
+	public Customer(CharField firstName, CharField lastName, CharField userLoginId) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -39,35 +53,35 @@ public class Customer implements Serializable{
 		super();
 	}
 
-	public int getCustomerId() {
+	public CharField getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(CharField customerId) {
 		this.customerId = customerId;
 	}
 
-	public String getFirstName() {
+	public CharField getFirstName() {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(CharField firstName) {
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
+	public CharField getLastName() {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName(CharField lastName) {
 		this.lastName = lastName;
 	}
 
-	public int getUserLoginId() {
+	public CharField getUserLoginId() {
 		return userLoginId;
 	}
 
-	public void setUserLoginId(int userLoginId) {
+	public void setUserLoginId(CharField userLoginId) {
 		this.userLoginId = userLoginId;
 	}
 
