@@ -3,28 +3,22 @@ package com.revature.models;
 import java.util.Objects;
 
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import com.revature.services.ORM.Annot.Table;
 
 
-@Table(name="account", schema="public")
+@Table(name="account")
 public class Account {
 	
-	
-	@Id
-	@Column(name="accountid")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public int accountid;
-	
-	@Column(name="balance")
-	public double balance;
-	
-	@Column(name="customerid")
-	public int customerid;
+	 public int accountid;
+	  public int customerid;
+	   
+	    public double balance;
 
 //	public Account(double balance, int customerId) {
 //		super();
@@ -42,6 +36,16 @@ public class Account {
 	public Account() {
 		// TODO Auto-generated constructor stub
 	}
+	
+
+
+	public Account(int customerid, double balance) {
+	super();
+	this.customerid = customerid;
+	this.balance = balance;
+}
+
+
 
 	public int getAccountId() {
 		return accountid;
@@ -88,7 +92,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Accounts [accountId=" + accountid + ", balance=" + balance + ", customerId=" + customerid + "]";
+		return "Account [accountId=" + accountid + ", balance=" + balance + ", customerId=" + customerid + "]";
 	}
 	
 	

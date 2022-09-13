@@ -44,28 +44,31 @@ public Account addAccount(Account acc) throws SQLException {
 		return acc;
 	}
 
-public Account getAccountById(Integer accId) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, SQLException {
-	Account acc = (Account) ConnectionFactory.getConnection().where(accId, "account", "accountid", Account.class);
-	
-	Account acc2 = new Account();
-	
-	acc2.setAccountId(accId);
-	acc2.setBalance(acc.getBalance());
-	acc2.setCustomerId(acc.getCustomerId());
-	
-	
-	
-	//Object account = db.where("BobRoss", "account", "usernames", ObjTest2.class);
-	//ObjTest2 acc = (ObjTest2) account;
-	//System.out.println(acc.acc_balance );
-	
 
-	
-	System.out.println(acc2.toString());
-	return acc2;
+
+public Account getAccountById(int accId) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, SQLException {
+    Database db =  ConnectionFactory.getConnection();
+    Account acc = (Account) db.where(accId, "account", "accountid", Account.class);
+    System.out.println("getaccountbyId = " + acc.toString());
+    return acc;
 }
 
-public void deleteAccount(Account acc) {
+public Account updateAccountById(int accId, String column, String value) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, SQLException {
+    Database db =  ConnectionFactory.getConnection();
+    Account acc = (Account) db.where(accId, "account", "accountid", Account.class);
+    
+    db.update(acc, column, value);
+    System.out.println("getaccountbyId = " + acc.toString());
+    return acc;
+}
+
+
+
+
+public void deleteAccount(Account acc) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, SQLException {
+	
+	Database db =  ConnectionFactory.getConnection();
+    db.delete(acc);
 	try {
 		 ConnectionFactory.getConnection().delete(acc);
 		

@@ -3,29 +3,56 @@ package com.revature.models;
 
 import java.util.Objects;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import com.revature.services.ORM.Annot.Table;
 
 
-@Table(name = "customer", schema="public")
-
+@Table(name = "customer" )
 public class Customer{
 	
-	public Integer  customerId;
+	public int  customerid;
 
-	public String firstName;
+	public String firstname;
 
-	public String lastName;
+	public String lastname;
 	
-	public Integer userLoginId;
+	public int userloginid;
+	
+	
+	
+
+	public Customer(Integer customerId, String firstName, String lastName, Integer userLoginId) {
+		super();
+		this.customerid = customerId;
+		this.firstname = firstName;
+		this.lastname = lastName;
+		this.userloginid = userLoginId;
+	}
+	
+	public Customer( String firstName, String lastName, Integer userLoginId) {
+		super();
+		
+		this.firstname = firstName;
+		this.lastname = lastName;
+		this.userloginid = userLoginId;
+	}
+
+
+
+	public Customer() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, firstName, lastName, userLoginId);
+		return Objects.hash(customerid, firstname, lastname, userloginid);
 	}
 
 	@Override
@@ -37,46 +64,46 @@ public class Customer{
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		return Objects.equals(customerId, other.customerId) && Objects.equals(firstName, other.firstName)
-				&& Objects.equals(lastName, other.lastName) && Objects.equals(userLoginId, other.userLoginId);
+		return Objects.equals(customerid, other.customerid) && Objects.equals(firstname, other.firstname)
+				&& Objects.equals(lastname, other.lastname) && Objects.equals(userloginid, other.userloginid);
 	}
 
 	public Integer getCustomerId() {
-		return customerId;
+		return customerid;
 	}
 
 	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
+		this.customerid = customerId;
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return firstname;
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this.firstname = firstName;
 	}
 
 	public String getLastName() {
-		return lastName;
+		return lastname;
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		this.lastname = lastName;
 	}
 
 	public Integer getUserLoginId() {
-		return userLoginId;
+		return userloginid;
 	}
 
 	public void setUserLoginId(Integer userLoginId) {
-		this.userLoginId = userLoginId;
+		this.userloginid = userLoginId;
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", userLoginId=" + userLoginId + "]";
+		return "Customer [customerId=" + customerid + ", firstName=" + firstname + ", lastName=" + lastname
+				+ ", userLoginId=" + userloginid + "]";
 	}
 
 	

@@ -1,28 +1,28 @@
 package com.revature.services.ORM.Testing;
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import com.revature.models.Account;
+import com.revature.models.UserLogin;
 import com.revature.repository.ConnectionFactory;
-import com.revature.services.ORM.Database.Database;
+import com.revature.services.ORM.Database.Query;
 
 public class Driver {
+	
+	public static <T> Object getConstructor(Class<?> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		Object row = clazz.getDeclaredConstructor().newInstance();
+		return row;
+	}
 	public static void main(String[] args) throws SQLException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
 		
+	UserLogin uLog = new UserLogin();
+	Query q = new Query(ConnectionFactory.getConnection());
+	
+	System.out.println(q.getTable(uLog).toString());
 		
-		Account newAccount = new Account();
+		 
+		 
 		
-		newAccount.setBalance(122);
-		newAccount.setCustomerId(2);
-		
-		ConnectionFactory.getConnection().insert(newAccount);
-		 
-		 
-		 
-		 
 		 
 		 
 	}

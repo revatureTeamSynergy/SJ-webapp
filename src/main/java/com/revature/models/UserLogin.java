@@ -2,51 +2,50 @@ package com.revature.models;
 
 import java.util.Objects;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import com.revature.services.ORM.Annot.Table;
 
-@Entity
-@Table(name= "user_login", schema="public")
+
+@Table(name= "userlogin")
 public class UserLogin {
+
+	public int userloginid;
 	
-	@Id
-	@Column(name="user_login_id" )
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int user_login_Id;
 	
-	@Column(name= "username", unique=true,nullable=false)
-	private String username;
-	
-	@Column(name= "password", unique=true,nullable=false)
-	private String password;
+	public String username;
 	
 
-	public UserLogin(String username, String password, int customerId) {
+	public String password;
+	
+
+	public UserLogin(int userloginid, String username, String password) {
 		super();
+		this.userloginid = userloginid;
 		this.username = username;
 		this.password = password;
 	}
 
-	public UserLogin(String username, String password) {
-		super();
-		this.username = username;
-		this.password = password;
-	}
+//	public UserLogin(String username, String password) {
+//		super();
+//		this.username = username;
+//		this.password = password;
+//	}
 
 	public UserLogin() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getUserLoginId() {
-		return user_login_Id;
+	public int getUserloginid() {
+		return userloginid;
 	}
 
-	public void setUserLoginId(int userLoginId) {
-		this.user_login_Id = userLoginId;
+	public void setUserloginid(int userloginid) {
+		this.userloginid = userloginid;
 	}
 
 	public String getUsername() {
@@ -65,16 +64,32 @@ public class UserLogin {
 		this.password = password;
 	}
 
-
-
-
-
 	@Override
 	public String toString() {
-		return "UserLogin [userLoginId=" + user_login_Id + ", username=" + username + ", password=" + password
-				+ ", customerId= ]";
+		return "UserLogin [userloginid=" + userloginid + ", username=" + username + ", password=" + password + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(password, userloginid, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserLogin other = (UserLogin) obj;
+		return Objects.equals(password, other.password) && userloginid == other.userloginid
+				&& Objects.equals(username, other.username);
+	}
+
+
 	
+
 	
 	
 	

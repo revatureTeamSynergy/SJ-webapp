@@ -59,6 +59,7 @@ public class Query {
 		String cString = Util.ArrayListToString(columns);
 		String vString = Util.ArrayListToStringWQ(values);
 		String sql = "INSERT INTO " + table + " ("+cString+") values ("+vString+");";
+		System.out.println(sql);
 		return sql;
 		
 	}
@@ -92,8 +93,11 @@ public class Query {
 		ArrayList<String> columns = new ArrayList<>();
 		ArrayList<Object> rows = new ArrayList<>();
 		Object row = getConstructor(clazz);
+		
 		if (what instanceof String) {what = "'" + what + "'";}
+		if (what instanceof Integer) {what = what;}
 		final String sql = "SELECT * FROM " + table + " WHERE " + column + " = " + what + ";";
+		System.out.println(sql);
 		try(PreparedStatement statement = database.connection.prepareStatement(sql);)
 		{
 			ResultSet set = statement.executeQuery();
@@ -102,11 +106,15 @@ public class Query {
 			while (set.next()) {	
 				for(int i = 1; i <= columnC; i++) {
 				values.add(set.getObject(i));
+				System.out.println("values from DB " + set.getObject(i));
 				columns.add(meta.getColumnLabel(i));
 				}
 				
 			for(int i = 0; i < values.size(); i++) {
 				putValue(row, columns.get(i), values.get(i), clazz);
+				System.out.println("row = " + row);
+				System.out.println("columns = " + columns.get(i));
+				System.out.println("values = " + values.get(i));
 				}
 			}
 			
@@ -115,6 +123,8 @@ public class Query {
 		}
 		return row;
 	}
+	
+	
 
 	public void update(Object obj, String column, String newValue) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		final String sql = getUpdateString(obj, column, newValue);

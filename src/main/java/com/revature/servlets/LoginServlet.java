@@ -2,6 +2,8 @@ package com.revature.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,7 +37,14 @@ public class LoginServlet extends HttpServlet{
 //		
 		String dispatch = "";
 //		
-		UserLogin uLog = uDao.getUserLoginByUsername(username);
+		UserLogin uLog = null;
+		try {
+			uLog = uDao.getUserLoginByUsername(username);
+		} catch (IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException
+				| NoSuchMethodException | SecurityException | NoSuchFieldException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		
@@ -58,12 +67,12 @@ public class LoginServlet extends HttpServlet{
 //			session.setMaxInactiveInterval(30*60);
 			
 			Cookie userName = new Cookie("user", username);
-			Cookie userId = new Cookie("userLoginId", Integer.valueOf(uLog.getUserLoginId()).toString());
+			Cookie userId = new Cookie("userLoginId", Integer.valueOf(uLog.getUserloginid()).toString());
 			userId.setMaxAge(30*60);
 			userName.setMaxAge(30*60);
 			response.addCookie(userId);
 			response.addCookie(userName);
-			response.setIntHeader("userLoginId", uLog.getUserLoginId());
+			response.setIntHeader("userLoginId", uLog.getUserloginid());
 			
 			
 			

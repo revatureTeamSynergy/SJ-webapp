@@ -48,12 +48,11 @@ public class AccountMenu extends HttpServlet{
 			
 		}
 		
-		Account newAccount = new Account();
+		Account newAccount = new Account(Integer.valueOf(customerId), Double.valueOf(accountInitBalance));
+		int randomNum = 1 + (int)(Math.random() * 999999);
+		newAccount.setAccountId(randomNum);
 		
-		newAccount.setBalance(Double.valueOf(accountInitBalance));
-		
-		newAccount.setCustomerId(Integer.valueOf(customerId));
-		
+	
 		System.out.println("newacc: " + newAccount.toString());
 		
 		try {
@@ -68,6 +67,11 @@ public class AccountMenu extends HttpServlet{
 //		newAccount.insert(Account.class);
 		
 		out.print("account added");
+		
+		out.print("account obtained");
+		out.print("accountId: " + newAccount.getAccountId());
+		out.print("balance: " + newAccount.getBalance());
+		out.print("customerId: " + newAccount.getCustomerId());
 		
 		RequestDispatcher rD = request.getRequestDispatcher(dispatch);
 		rD.include(request, response);
@@ -129,7 +133,7 @@ public class AccountMenu extends HttpServlet{
 		
 	}
 	
-protected void doUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		response.setContentType("text/html");
 		
@@ -138,9 +142,49 @@ protected void doUpdate(HttpServletRequest request, HttpServletResponse response
 
 		PrintWriter out = response.getWriter();
 		String accountId = request.getParameter("accountId");
-		String customerId = request.getParameter("customerId");
+		String column = request.getParameter("column");
+		String value = request.getParameter("value");
 		
+		try {
+			aDao.updateAccountById(Integer.valueOf(accountId), column, value);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		dispatch = "accountmenu.html";
+		
+		out.print("account updated");
+		out.print("accountId: " + accountId);
+		out.print("column: " + column);
+		out.print("value: " + value);
+		
+		RequestDispatcher rD = request.getRequestDispatcher(dispatch);
+		rD.include(request, response);
 		
 		
 	}
@@ -154,11 +198,40 @@ protected void doDelete(HttpServletRequest request, HttpServletResponse response
 
 	PrintWriter out = response.getWriter();
 	String accountId = request.getParameter("accountId");
-	String customerId = request.getParameter("customerId");
 	
+	Account getAccount = new Account();
+	try {
+		getAccount = aDao.getAccountById(Integer.valueOf(accountId));
+		aDao.deleteAccount(getAccount);
+	} catch (SecurityException | IllegalArgumentException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IllegalAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (InstantiationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (InvocationTargetException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (NoSuchMethodException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (NoSuchFieldException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	
+	dispatch = "accountmenu.html";
 	
+	out.print("account deleted");
 	
+	RequestDispatcher rD = request.getRequestDispatcher(dispatch);
+	rD.include(request, response);
 	
 }
 

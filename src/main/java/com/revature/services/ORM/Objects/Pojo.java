@@ -22,8 +22,8 @@ public class Pojo {
 	
 	public Pojo (Class<?> clazz) {
 Table annot = clazz.getAnnotation(Table.class);
-//		table = annot.name();
-		table = "account";
+		table = annot.name();
+		
 		Field[] fields = (clazz.getDeclaredFields());
 		for (Field field : fields) {
 			columns.add(field.getName());
