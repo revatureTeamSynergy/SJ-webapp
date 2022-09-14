@@ -1,6 +1,7 @@
 package com.revature.servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.revature.models.Account;
 import com.revature.repository.AccountDao;
 import com.revature.repository.ConnectionFactory;
-import com.revature.services.ORM.Database.Database;
+import com.revature.ORM.Database.Database;
 
 public class AccountMenu extends HttpServlet{
 	

@@ -2,6 +2,7 @@ package com.revature.repository;
 
 
 import java.lang.reflect.InvocationTargetException;
+
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.models.UserLogin;
-import com.revature.services.ORM.Database.Database;
+import com.revature.ORM.Database.Database;
 
 public class UserLoginDao {
 	

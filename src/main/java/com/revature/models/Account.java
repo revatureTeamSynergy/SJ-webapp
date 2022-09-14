@@ -4,12 +4,13 @@ import java.util.Objects;
 
 
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import com.revature.services.ORM.Annot.Table;
+import com.revature.ORM.Annot.Table;
 
 
 @Table(name="account")

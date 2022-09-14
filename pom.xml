@@ -91,11 +91,7 @@
 		    <version>42.2.9</version>
 		</dependency>
         
-        <dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-entitymanager</artifactId>
-		    <version>5.6.10.Final</version>
-		</dependency>
+     
 		            
               <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
         <dependency>
@@ -120,10 +116,18 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>com.dieselpoint</groupId>
-		    <artifactId>norm</artifactId>
-		    <version>0.8.5</version>
-		    <exclusions></exclusions>
+		   <groupId>javax.persistence</groupId>
+		   <artifactId>persistence-api</artifactId>
+		   <version>1.0.2</version>
+		   <scope>provided</scope>
 		</dependency>
+		<dependency>
+			  <groupId>com.revature</groupId>
+		  <artifactId>PlanetAPI</artifactId>
+		  <version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+				
+	
  </dependencies>
 </project>
