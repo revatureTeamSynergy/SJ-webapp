@@ -51,6 +51,14 @@ public Customer getCustomerById(int customerid) throws SQLException, IllegalArgu
 	
 }
 
+public Customer getCustomerByUserLoginId(int userloginid) throws SQLException, IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException {
+	 Database db =  ConnectionFactory.getConnection();
+	    Customer cust = (Customer) db.where(userloginid, "customer", "userloginid", Customer.class);
+	   
+	    return cust;
+	
+}
+
 public Customer updateCustomer(int customerid, String column, String value) throws Throwable {
 	
 		Database db =  ConnectionFactory.getConnection();

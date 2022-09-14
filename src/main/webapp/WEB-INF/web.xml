@@ -50,6 +50,18 @@
 	<servlet-name>AccountMenu</servlet-name>
 	<url-pattern>/accountmenu</url-pattern>
 </servlet-mapping>
+<servlet>
+	<servlet-name>TransactionMenu</servlet-name>
+	<servlet-class>com.revature.servlets.TransactionMenu</servlet-class>
+
+</servlet>
+
+<servlet-mapping>
+	<servlet-name>TransactionMenu</servlet-name>
+	<url-pattern>/transactionmenu</url-pattern>
+
+</servlet-mapping>
+
 
 <error-page>
 	<error-code>404</error-code>

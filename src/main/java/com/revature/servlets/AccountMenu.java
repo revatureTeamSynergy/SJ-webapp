@@ -1,21 +1,22 @@
 package com.revature.servlets;
 
 import java.io.IOException;
-
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.revature.ORM.Database.Database;
 import com.revature.models.Account;
 import com.revature.repository.AccountDao;
 import com.revature.repository.ConnectionFactory;
-import com.revature.ORM.Database.Database;
 
 public class AccountMenu extends HttpServlet{
 	
@@ -38,10 +39,18 @@ public class AccountMenu extends HttpServlet{
 		
 		String dispatch = "";
 		
-		System.out.println("test");
+		
 		PrintWriter out = response.getWriter();
 		String accountInitBalance = request.getParameter("accountInitBalance");
 		String customerId = request.getParameter("customerId");
+		Cookie[] s = request.getCookies();
+		for(int i=0;i<s.length;i++){  
+			 if (s[i].getName().equals("customerId")) {
+				 customerId = s[i].getValue();
+			 }
+			}  
+	
+		
 		
 		if (customerId == null || Double.valueOf(accountInitBalance) <= 0) {
 			out.println("<font color=red>Invalid account entry</font>");
@@ -53,8 +62,8 @@ public class AccountMenu extends HttpServlet{
 		int randomNum = 1 + (int)(Math.random() * 999999);
 		newAccount.setAccountId(randomNum);
 		
+		System.out.println(newAccount.toString());
 	
-		System.out.println("newacc: " + newAccount.toString());
 		
 		try {
 			aDao.addAccount(newAccount);
@@ -67,12 +76,11 @@ public class AccountMenu extends HttpServlet{
 		
 //		newAccount.insert(Account.class);
 		
-		out.print("account added");
+		out.print("Account added<br>");
 		
-		out.print("account obtained");
-		out.print("accountId: " + newAccount.getAccountId());
-		out.print("balance: " + newAccount.getBalance());
-		out.print("customerId: " + newAccount.getCustomerId());
+		out.print("accountId: " + newAccount.getAccountId() + "<br>");
+		out.print("balance: " + newAccount.getBalance() + "<br>");
+		out.print("customerId: " + newAccount.getCustomerId() + "<br>");
 		
 		RequestDispatcher rD = request.getRequestDispatcher(dispatch);
 		rD.include(request, response);
@@ -90,11 +98,19 @@ public class AccountMenu extends HttpServlet{
 
 		PrintWriter out = response.getWriter();
 		String accountId = request.getParameter("accountId");
-		Account getAccount =  new Account();
 		
+		Account arrL = new Account();
+		String customerId = request.getParameter("customerId");
+		Cookie[] s = request.getCookies();
+		for(int i=0;i<s.length;i++){  
+			 if (s[i].getName().equals("customerId")) {
+				 customerId = s[i].getValue();
+			 }
+			}  
 		
 		try {
-			getAccount = aDao.getAccountById(Integer.valueOf(accountId));
+//			getAccount = aDao.getAccountById(Integer.valueOf(accountId));
+			arrL = aDao.getAccountById(Integer.valueOf(accountId));
 		} catch (SecurityException | IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,14 +135,13 @@ public class AccountMenu extends HttpServlet{
 		}
 		dispatch = "accountmenu.html";
 		
-		out.print("account obtained");
-		out.print("accountId: " + getAccount.getAccountId());
-		out.print("balance: " + getAccount.getBalance());
-		out.print("customerId: " + getAccount.getCustomerId());
-		
-		System.out.print("accountId: " + getAccount.getAccountId());
-		System.out.print("balance: " + getAccount.getBalance());
-		System.out.print("customerId: " + getAccount.getCustomerId());
+			if (arrL.customerid != Integer.valueOf(customerId)) {
+				out.print("You can only view accounts that you own.");
+			} else {
+				out.print("accountId: " + arrL.getAccountId() + "<br>");
+				out.print("balance: " + arrL.getBalance() + "<br>");
+			}
+	
 		
 		RequestDispatcher rD = request.getRequestDispatcher(dispatch);
 		rD.include(request, response);
@@ -179,10 +194,10 @@ protected void doPut(HttpServletRequest request, HttpServletResponse response) t
 		
 		dispatch = "accountmenu.html";
 		
-		out.print("account updated");
-		out.print("accountId: " + accountId);
-		out.print("column: " + column);
-		out.print("value: " + value);
+		out.print("account updated" + "<br>");
+		out.print("accountId: " + accountId + "<br>");
+		out.print("column: " + column + "<br>");
+		out.print("value: " + value + "<br>");
 		
 		RequestDispatcher rD = request.getRequestDispatcher(dispatch);
 		rD.include(request, response);
@@ -229,7 +244,7 @@ protected void doDelete(HttpServletRequest request, HttpServletResponse response
 	
 	dispatch = "accountmenu.html";
 	
-	out.print("account deleted");
+	out.print("account deleted" + "<br>");
 	
 	RequestDispatcher rD = request.getRequestDispatcher(dispatch);
 	rD.include(request, response);

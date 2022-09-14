@@ -14,14 +14,17 @@ public class ConnectionFactory {
 	
 	public static Database getConnection() throws SQLException {
 		
+		String url = System.getenv("P1_DATABASE_URL");
+		String user = System.getenv("P1_DATABASE_USERNAME");
+		String pass = System.getenv("P1_DATABASE_PASSWORD");
 	
 		Database db = null;
 		
 		try {
-//		 connection = DriverManager.getConnection(url, user, password);
+
 			Class.forName("org.postgresql.Driver");
 		 
-		  db = new Database(System.getenv("P1_DATABASE_URL"), System.getenv("P1_DATABASE_USERNAME"), System.getenv("P1_DATABASE_PASSWORD"));
+		  db = new Database(url, user, pass);
 		
 		} catch (SQLException e) {
 			System.out.println("Connection Failure");

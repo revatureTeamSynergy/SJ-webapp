@@ -2,8 +2,6 @@ package com.revature.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.revature.models.Customer;
 import com.revature.models.UserLogin;
 import com.revature.repository.ConnectionFactory;
+import com.revature.repository.CustomerDao;
 import com.revature.repository.UserLoginDao;
 import com.revature.services.Validation;
 
 public class RegisterServlet extends HttpServlet{
 	
 		UserLoginDao uDao = new UserLoginDao();
+		CustomerDao cDao = new CustomerDao();
 	
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
@@ -32,15 +32,19 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		PrintWriter out = response.getWriter();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
 		
 		while (!Validation.isValidUsername(username)) {
 			out.println("<font color=red>Please use between 8 and 20 alphanumeric characters</font>");
-			
+			RequestDispatcher rD = request.getRequestDispatcher("register");
+			rD.include(request, response);
 		}
 		
 		while (!Validation.isValidPass(password)) {
 			out.println("<font color=red>Please use between 8 and 20 alphanumeric characters, a special, and a number</font>");
-			
+			RequestDispatcher rD = request.getRequestDispatcher("register");
+			rD.include(request, response);
 		}
 		
 //		
@@ -52,9 +56,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		
 	
 		int randomNum = 1 + (int)(Math.random() * 999999);
+		int randomNum2 = 1 + (int)(Math.random() * 999999);
 			UserLogin uLog = new UserLogin(randomNum, username, password);
+			Customer c = new Customer(randomNum2, firstName, lastName, randomNum);
 			try {
 				 uDao.addUserLogin(uLog);
+				 cDao.addCustomer(c);
 				 uLog =  (UserLogin) ConnectionFactory.getConnection().where(username, "userlogin", "username", UserLogin.class);
 				
 			} catch (Throwable e) {
@@ -62,12 +69,21 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 				e.printStackTrace();
 			}
 			
+			Cookie userLoginId = new Cookie("userLoginId", Integer.valueOf(uLog.getUserloginid()).toString());
+			Cookie customerId = new Cookie("customerId", Integer.valueOf(c.getCustomerId()).toString());
 			Cookie userName = new Cookie("user", username);
 			userName.setMaxAge(30*60);
+			customerId.setMaxAge(30*60);
+			userLoginId.setMaxAge(30*60);
+			response.addCookie(userLoginId);
+			response.addCookie(customerId);
 			response.addCookie(userName);
 			dispatch = "useraccount.html";
 		
-		
+			out.print("new userLogin added" + "<br>");
+			out.print("UserLoginId: " + uLog.getUserloginid()+ "<br>");
+			out.print("Username: " + uLog.getUsername()+"<br>");
+			out.print("Password: " + uLog.getPassword()+ "<br>");
 		
 		
 		RequestDispatcher rD = request.getRequestDispatcher(dispatch);

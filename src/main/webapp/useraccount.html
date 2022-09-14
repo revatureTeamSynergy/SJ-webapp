@@ -2,14 +2,30 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" href="style.css">
 <title>RevBank Account</title>
 </head>
 <body>
 
 <h2>Welcome to RevBank User Menu!</h2>
-<br>
-<h4>Please choose an option below:</h4>
-<br>
+
+	<h4>Get account information</h4>
+	<form action="useraccount" method="get">
+		<input type="submit" value="Get info"/>
+		
+	</form>
+	<h4>Update user information</h4>
+	<form action="useraccount" method="post">
+		Column : <input type="text" name="column"><br>
+		Value : <input type="text" name="value"><br>
+		<input type="submit" value="Update"/>
+		
+	</form>
+	
+	<a href="accountmenu.html">View Accounts</a>
+	<a href="login.html">Log out</a>
+	
+
 
 </body>
 </html>

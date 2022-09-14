@@ -2,15 +2,14 @@ package com.revature.repository;
 
 
 import java.lang.reflect.InvocationTargetException;
-
 import java.sql.SQLException;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revature.models.Account;
-
 import com.revature.ORM.Database.Database;
+import com.revature.models.Account;
 
 public class AccountDao {
 	
@@ -54,12 +53,22 @@ public Account getAccountById(int accId) throws IllegalArgumentException, Illega
     return acc;
 }
 
+public Account getAccountsByCustomerId(int customerId) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, SQLException {
+    Database db =  ConnectionFactory.getConnection();
+   
+ 
+	Account arrL = (Account) db.where(customerId, "account", "customerid", Account.class);
+    
+  
+    return arrL;
+}
+
 public Account updateAccountById(int accId, String column, String value) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, SecurityException, NoSuchFieldException, SQLException {
     Database db =  ConnectionFactory.getConnection();
     Account acc = (Account) db.where(accId, "account", "accountid", Account.class);
     
     db.update(acc, column, value);
-    System.out.println("getaccountbyId = " + acc.toString());
+   
     return acc;
 }
 

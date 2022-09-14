@@ -11,9 +11,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.revature.models.Customer;
 import com.revature.models.UserLogin;
+import com.revature.repository.CustomerDao;
 import com.revature.repository.UserLoginDao;
 
 
@@ -41,8 +42,8 @@ public class LoginServlet extends HttpServlet{
 		try {
 			uLog = uDao.getUserLoginByUsername(username);
 		} catch (IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException
-				| NoSuchMethodException | SecurityException | NoSuchFieldException | SQLException e) {
-			// TODO Auto-generated catch block
+				| NoSuchMethodException | SecurityException | NoSuchFieldException | SQLException | NullPointerException e) {
+			out.println("<font color=red>Username or Password is incorrect</font>");
 			e.printStackTrace();
 		}
 		
@@ -52,19 +53,26 @@ public class LoginServlet extends HttpServlet{
 			out.println("<font color=red>Username or Password is incorrect</font>");
 		}
 		
-		System.out.println(uLog.toString());
+		
 		
 		if(uLog.getPassword().equals(password)) {
+			CustomerDao cDao = new CustomerDao();
+			Customer cust = null;
+			try {
+				cust = cDao.getCustomerByUserLoginId(uLog.getUserloginid());
+			} catch (IllegalArgumentException | IllegalAccessException | InstantiationException
+					| InvocationTargetException | NoSuchMethodException | SecurityException | NoSuchFieldException
+					| SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (cust != null) {
+				Cookie customerId = new Cookie("customerId", cust.getCustomerId().toString());
+				customerId.setMaxAge(30 * 60);
+				response.addCookie(customerId);
+			}
 			
 			dispatch = "useraccount.html";
-			
-			// Session Handling
-			
-//			HttpSession session = HibernateUtil.getSession();
-//			session.setAttribute("user", "admin");
-			
-			// set max time for session
-//			session.setMaxInactiveInterval(30*60);
 			
 			Cookie userName = new Cookie("user", username);
 			Cookie userId = new Cookie("userLoginId", Integer.valueOf(uLog.getUserloginid()).toString());

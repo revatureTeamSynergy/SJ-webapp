@@ -21,44 +21,59 @@ import com.revature.repository.CustomerDao;
 public class UserAccount extends HttpServlet{
 	
 	CustomerDao cDao = new CustomerDao();
-	
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		
-		response.setContentType("text/html");
-		
-		String dispatch = "";
-		
 
-		PrintWriter out = response.getWriter();
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String userLoginId = request.getParameter("userLoginId");
-		
-		
-		
-		int randomNum = 1 + (int)(Math.random() * 999999);
-		Customer cust = new Customer(randomNum, firstName, lastName, Integer.valueOf(userLoginId));
-		try {
-			cDao.addCustomer(cust);
-			cust =  (Customer) ConnectionFactory.getConnection().where(randomNum, "customer", "customerid", Customer.class);
-			
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		out.print("new customer added");
-		dispatch = "useraccount.html";
 	
-	
-	
-	
-	RequestDispatcher rD = request.getRequestDispatcher(dispatch);
-	rD.include(request, response);
-		
-		
-		
-	}
+//protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//		
+//		response.setContentType("text/html");
+//		
+//		String dispatch = "";
+//		
+//
+//		PrintWriter out = response.getWriter();
+//		String firstName = request.getParameter("firstName");
+//		String lastName = request.getParameter("lastName");
+//		String userLoginId = request.getParameter("userLoginId");
+//		
+//		Cookie[] s = request.getCookies();
+//		for(int i=0;i<s.length;i++){  
+//			 if (s[i].getName().equals("userLoginId")) {
+//				 userLoginId = s[i].getValue();
+//			 }
+//			}  
+//		
+//		
+//		int randomNum = 1 + (int)(Math.random() * 999999);
+//		Customer cust = new Customer(randomNum, firstName, lastName, Integer.valueOf(userLoginId));
+//		try {
+//			cDao.addCustomer(cust);
+//			cust =  (Customer) ConnectionFactory.getConnection().where(randomNum, "customer", "customerid", Customer.class);
+//			
+//		} catch (Throwable e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		Cookie customerId = new Cookie("customerId", cust.getCustomerId().toString());
+//		customerId.setMaxAge(30 * 60);
+//		response.addCookie(customerId);
+//		
+//		out.print("new customer added" + "<br>");
+//		out.print("CustomerId: " + cust.getCustomerId()+ "<br>");
+//		out.print("Name: " + cust.getFirstName() + " " + cust.getLastName() + "<br>");
+//		out.print("userloginId: " + cust.getUserLoginId()+ "<br>");
+//		
+//		dispatch = "useraccount.html";
+//	
+//	
+//	
+//	
+//	RequestDispatcher rD = request.getRequestDispatcher(dispatch);
+//	rD.include(request, response);
+//		
+//		
+//		
+//	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 			
@@ -69,7 +84,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		
 		String customerId = request.getParameter("customerId");
 	
-		
+		Cookie[] s = request.getCookies();
+		for(int i=0;i<s.length;i++){  
+			 if (s[i].getName().equals("customerId")) {
+				 customerId = s[i].getValue();
+			 }
+			}  
 		
 		
 		Customer cust = new Customer();
@@ -86,12 +106,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		}
 	
 		
-		out.print("get customer");
+		out.print("Get customer info:" + "<br>");
 		
-		out.print("customerId " + cust.getCustomerId());
-		out.print("first name " + cust.getFirstName());
-		out.print("last name " + cust.getLastName());
-		out.print("userloginid " + cust.getUserLoginId());
+		out.print("customerId " + cust.getCustomerId()+ "<br>");
+		out.print("first name " + cust.getFirstName()+ "<br>");
+		out.print("last name " + cust.getLastName()+ "<br>");
+		out.print("userloginid " + cust.getUserLoginId()+ "<br>");
 		dispatch = "useraccount.html";
 	
 	
@@ -102,7 +122,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		
 	}
 	
-protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		response.setContentType("text/html");
 		
@@ -114,39 +134,20 @@ protected void doPut(HttpServletRequest request, HttpServletResponse response) t
 		String column = request.getParameter("column");
 		String value = request.getParameter("value");
 		
-		try {
-			cust = cDao.updateCustomer(Integer.valueOf(customerId), column, value);
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Cookie[] s = request.getCookies();
+		for(int i=0;i<s.length;i++){  
+			 if (s[i].getName().equals("customerId")) {
+				 customerId = s[i].getValue();
+			 }
+			}  
+		
+			try {
+				cust = cDao.updateCustomer(Integer.valueOf(customerId), column, value);
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 		
 		dispatch = "accountmenu.html";
 		
@@ -172,34 +173,21 @@ protected void doDelete(HttpServletRequest request, HttpServletResponse response
 	String customerId = request.getParameter("customerId");
 	
 	Customer cust = new Customer();
-	try {
-		cust = cDao.getCustomerById(Integer.valueOf(customerId));
-		cDao.deleteCustomer(cust);
-	} catch (SecurityException | IllegalArgumentException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IllegalAccessException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (InstantiationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (InvocationTargetException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (NoSuchMethodException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (NoSuchFieldException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (Throwable e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	
+		try {
+			cust = cDao.getCustomerById(Integer.valueOf(customerId));
+		} catch (IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException
+				| NoSuchMethodException | SecurityException | NoSuchFieldException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			cDao.deleteCustomer(cust);
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	
 	dispatch = "accountmenu.html";
 	
